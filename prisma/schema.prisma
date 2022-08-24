@@ -9,3 +9,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DB_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  password String
+  isBlocked Boolean @default(false)
+  permission Permission @relation(fields: [permissionId], references: [id])
+  permissionId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user")
+}
+
+model Permission {
+  id Int @id @default(autoincrement())
+  title String
+  permissionLevel PermissionLevel[]
+  user User[]
+
+  @@map("permission")
+}
+
+model PermissionLevel {
+  id Int @id @default(autoincrement())
+  page String @unique
+  create Boolean @default(false)
+  read Boolean @default(false)
+  update Boolean @default(false)
+  delete Boolean @default(false)
+  permission Permission @relation(fields: [permissionlId], references: [id])
+  permissionlId Int
+
+  @@map("permission_level")
+}
