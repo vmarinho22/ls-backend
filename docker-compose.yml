@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  db:
+    build: .docker/postgres
+    container_name: lsys-db
+    restart: always
+    tty: true
+    ports:
+      - "5432:5432"
+    volumes:
+      - .docker/postgres/dbdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
