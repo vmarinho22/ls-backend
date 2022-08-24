@@ -3,6 +3,7 @@ import { ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
 import { PermissionsService } from './permissions.service';
+
 @ApiTags('Permissions')
 @Controller('permissions')
 export class PermissionsController {
