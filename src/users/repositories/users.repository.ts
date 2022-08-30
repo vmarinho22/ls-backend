@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './../dto/create-user.dto';
@@ -49,11 +49,38 @@ export class UsersRepository {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { id }
+    });
+    delete user.password;
+
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const { password, confirmPassword, permissionId } = updateUserDto;
+    if (password || confirmPassword) {
+      throw new HttpException('A senha não pode ser atualizada aqui', 400);
+    }
+
+    if (permissionId) {
+      const permission = await this.prisma.permission.findUnique({
+        where: { id: permissionId }
+      });
+
+      if (!permission) {
+        throw new NotFoundException(`A permissão com ID #${permissionId} não foi encontrada`);
+      }
+    }
+
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: updateUserDto
+    });
+
+    delete user.password;
+
+    return user;
   }
 }
