@@ -9,19 +9,35 @@ export class PermissionsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createPermissionDto: CreatePermissionDto): Promise<PermissionEntity> {
+    const { title, permissions } = createPermissionDto;
     return this.prisma.permission.create({
-      data: createPermissionDto
+      data: {
+        title,
+        permissionLevel: {
+          create: permissions
+        }
+      },
+      include: {
+        permissionLevel: true
+      }
     });
   }
 
   findAll(): Promise<PermissionEntity[]> {
-    return this.prisma.permission.findMany();
+    return this.prisma.permission.findMany({
+      include: {
+        permissionLevel: true
+      }
+    });
   }
 
   findOne(id: number): Promise<PermissionEntity> {
     return this.prisma.permission.findUnique({
       where: {
         id
+      },
+      include: {
+        permissionLevel: true
       }
     });
   }
@@ -31,7 +47,10 @@ export class PermissionsRepository {
       where: {
         id
       },
-      data: updatePermissionDto
+      data: updatePermissionDto,
+      include: {
+        permissionLevel: true
+      }
     });
   }
 }

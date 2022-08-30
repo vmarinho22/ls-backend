@@ -40,8 +40,10 @@ model PermissionLevel {
   read Boolean @default(false)
   update Boolean @default(false)
   delete Boolean @default(false)
-  permission Permission @relation(fields: [permissionlId], references: [id])
-  permissionlId Int
+  permission Permission @relation(fields: [permissionId], references: [id])
+  permissionId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("permission_level")
 }
