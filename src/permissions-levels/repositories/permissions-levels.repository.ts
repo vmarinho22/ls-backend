@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePermissionsLevelDto } from '../dto/create-permissions-level.dto';
 import { UpdatePermissionsLevelDto } from '../dto/update-permissions-level.dto';
 import { PermissionsLevelEntity } from '../entities/permissions-level.entity';
+import { NotFoundError } from './../../common/errors/types/NotFoundError';
 
 @Injectable()
 export class PermissionsLevelsRepository {
@@ -39,6 +40,12 @@ export class PermissionsLevelsRepository {
   async update(id: number, updatePermissionsLevelDto: UpdatePermissionsLevelDto) {
     const { permissionId } = updatePermissionsLevelDto;
 
+    const permissionLevel = await this.prisma.permissionLevel.findUnique({ where: { id } });
+
+    if (!permissionLevel) {
+      throw new NotFoundError(`A permissão com ID #${id} não foi encontrada`);
+    }
+
     if (permissionId) {
       const permission = await this.prisma.permission.findUnique({
         where: { id: permissionId }
@@ -55,7 +62,12 @@ export class PermissionsLevelsRepository {
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    const permissionLevel = await this.prisma.permissionLevel.findUnique({ where: { id } });
+
+    if (!permissionLevel) {
+      throw new NotFoundError(`A permissão com ID #${id} não foi encontrada`);
+    }
     return this.prisma.permissionLevel.delete({
       where: { id }
     });

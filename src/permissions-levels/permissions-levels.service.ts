@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePermissionsLevelDto } from './dto/create-permissions-level.dto';
 import { UpdatePermissionsLevelDto } from './dto/update-permissions-level.dto';
+import { PermissionsLevelsRepository } from './repositories/permissions-levels.repository';
 
 @Injectable()
 export class PermissionsLevelsService {
+  constructor(private readonly repository: PermissionsLevelsRepository) {}
+
   create(createPermissionsLevelDto: CreatePermissionsLevelDto) {
-    return 'This action adds a new permissionsLevel';
+    return this.repository.create(createPermissionsLevelDto);
   }
 
   findAll() {
-    return `This action returns all permissionsLevels`;
+    return this.repository.findAll();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} permissionsLevel`;
+    return this.repository.findOne(id);
   }
 
   update(id: number, updatePermissionsLevelDto: UpdatePermissionsLevelDto) {
-    return `This action updates a #${id} permissionsLevel`;
+    return this.repository.update(id, updatePermissionsLevelDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} permissionsLevel`;
+    return this.repository.remove(id);
   }
 }
