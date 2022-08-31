@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { NotFoundError } from './../../common/errors/types/NotFoundError';
 import { PrismaService } from './../../prisma/prisma.service';
 import { CreatePermissionDto } from './../dto/create-permission.dto';
 import { UpdatePermissionDto } from './../dto/update-permission.dto';
@@ -43,6 +44,12 @@ export class PermissionsRepository {
   }
 
   async update(id: number, updatePermissionDto: UpdatePermissionDto): Promise<PermissionEntity> {
+    const permissionExists = await this.prisma.permission.findUnique({ where: { id } });
+
+    if (!permissionExists) {
+      throw new NotFoundError(`A permissão com ID #${id} não foi encontrada`);
+    }
+
     return this.prisma.permission.update({
       where: {
         id
