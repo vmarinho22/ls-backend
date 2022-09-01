@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { AuthRepository } from './repositories/auth.repository';
 
 @Injectable()
 export class AuthService {
-  login() {
-    return 'login';
-  }
+  constructor(private readonly repository: AuthRepository) {}
 
-  validateUser(username: string, email: string, password: string) {
-    return 'Usuário validado!';
+  validateUser(username: string, password: string) {
+    return this.repository.validateUser(username, password);
   }
 }
