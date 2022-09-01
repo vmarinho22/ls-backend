@@ -19,7 +19,7 @@ export class PermissionsLevelsRepository {
     });
 
     if (!permission) {
-      throw new NotFoundException(`A permissão com ID #${permissionId} não foi encontrada`);
+      throw new NotFoundError(`A permissão com ID #${permissionId} não foi encontrada`);
     }
 
     return this.prisma.permissionLevel.create({
