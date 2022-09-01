@@ -20,13 +20,6 @@ export class AuthRepository {
           },
           { email: username }
         ]
-      },
-      include: {
-        permission: {
-          include: {
-            permissionLevel: true
-          }
-        }
       }
     });
 
@@ -48,8 +41,7 @@ export class AuthRepository {
   login(user: UserLogin): UserToken {
     const payload: UserPayload = {
       sub: user.id,
-      username: user.username,
-      permissions: user.permissions
+      username: user.username
     };
 
     const jwtToken = this.jwtService.sign(payload);

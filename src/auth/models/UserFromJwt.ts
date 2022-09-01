@@ -1,13 +1,4 @@
-import { PermissionsLevelEntity } from 'src/permissions-levels/entities/permissions-level.entity';
-
-interface Permissions {
-  id: string | number;
-  title: string;
-  permissions: PermissionsLevelEntity[];
-}
-
 export interface UserFromJwt {
   id: number;
   username: string;
-  permissions: Permissions;
 }
