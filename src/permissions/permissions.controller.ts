@@ -3,6 +3,7 @@ import { ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PermissionInterceptor } from 'src/common/interceptors/permission.interceptor';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
+import { PermissionEntity } from './entities/permission.entity';
 import { PermissionsService } from './permissions.service';
 
 @ApiTags('Permissions')
@@ -19,7 +20,7 @@ export class PermissionsController {
     description: 'Acesso negado'
   })
   @Post()
-  create(@Body() createPermissionDto: CreatePermissionDto) {
+  create(@Body() createPermissionDto: CreatePermissionDto): Promise<PermissionEntity> {
     return this.permissionsService.create(createPermissionDto);
   }
 
@@ -27,7 +28,7 @@ export class PermissionsController {
     description: 'Acesso negado'
   })
   @Get()
-  findAll() {
+  findAll(): Promise<PermissionEntity[]> {
     return this.permissionsService.findAll();
   }
 
@@ -35,7 +36,7 @@ export class PermissionsController {
     description: 'Acesso negado'
   })
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<PermissionEntity> {
     return this.permissionsService.findOne(+id);
   }
 
@@ -43,7 +44,10 @@ export class PermissionsController {
     description: 'Acesso negado'
   })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePermissionDto: UpdatePermissionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePermissionDto: UpdatePermissionDto
+  ): Promise<PermissionEntity> {
     return this.permissionsService.update(+id, updatePermissionDto);
   }
 }

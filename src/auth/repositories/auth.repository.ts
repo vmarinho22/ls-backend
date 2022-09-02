@@ -6,13 +6,14 @@ import { UserLogin } from '../models/UserLogin';
 import { UserPayload } from '../models/UserPayload';
 import { UserToken } from '../models/UserToken';
 import { UnauthorizedError } from './../../common/errors/types/UnauthorizedError';
+import { UserEntity } from './../../users/entities/user.entity';
 
 @Injectable()
 export class AuthRepository {
   constructor(private readonly prisma: PrismaService, private readonly jwtService: JwtService) {}
 
-  async validateUser(username: string, password: string) {
-    const user = await this.prisma.user.findFirst({
+  async validateUser(username: string, password: string): Promise<UserEntity> {
+    const user: UserEntity = await this.prisma.user.findFirst({
       where: {
         OR: [
           {
@@ -27,7 +28,7 @@ export class AuthRepository {
       throw new UnauthorizedError('Usuário ou senha inválidos');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid: boolean = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
       throw new UnauthorizedError('Usuário ou senha inválidos');

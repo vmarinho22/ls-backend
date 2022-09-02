@@ -44,7 +44,9 @@ export class PermissionsRepository {
   }
 
   async update(id: number, updatePermissionDto: UpdatePermissionDto): Promise<PermissionEntity> {
-    const permissionExists = await this.prisma.permission.findUnique({ where: { id } });
+    const permissionExists: PermissionEntity = await this.prisma.permission.findUnique({
+      where: { id }
+    });
 
     if (!permissionExists) {
       throw new NotFoundError(`A permissão com ID #${id} não foi encontrada`);

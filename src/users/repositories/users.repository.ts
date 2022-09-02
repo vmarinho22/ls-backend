@@ -1,7 +1,9 @@
 import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UserEntity } from '../entities/user.entity';
 import { NotFoundError } from './../../common/errors/types/NotFoundError';
+import { PermissionEntity } from './../../permissions/entities/permission.entity';
 import { CreateUserDto } from './../dto/create-user.dto';
 import { UpdateUserDto } from './../dto/update-user.dto';
 
@@ -9,7 +11,7 @@ import { UpdateUserDto } from './../dto/update-user.dto';
 export class UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const { confirmPassword, permissionId } = createUserDto;
     delete createUserDto.confirmPassword;
 
@@ -42,7 +44,7 @@ export class UsersRepository {
     return user;
   }
 
-  async findAll() {
+  async findAll(): Promise<UserEntity[]> {
     const users = await this.prisma.user.findMany();
     return users.map(user => {
       delete user.password;
@@ -50,7 +52,7 @@ export class UsersRepository {
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<UserEntity> {
     const user = await this.prisma.user.findUnique({
       where: { id }
     });
@@ -59,10 +61,10 @@ export class UsersRepository {
     return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
     const { password, confirmPassword, permissionId } = updateUserDto;
 
-    const userExists = await this.prisma.user.findUnique({ where: { id } });
+    const userExists: UserEntity = await this.prisma.user.findUnique({ where: { id } });
 
     if (!userExists) {
       throw new NotFoundError(`Usuário com ID #${id} não encontrado`);
@@ -73,7 +75,7 @@ export class UsersRepository {
     }
 
     if (permissionId) {
-      const permission = await this.prisma.permission.findUnique({
+      const permission: PermissionEntity = await this.prisma.permission.findUnique({
         where: { id: permissionId }
       });
 

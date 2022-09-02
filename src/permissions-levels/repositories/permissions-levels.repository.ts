@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { PermissionEntity } from 'src/permissions/entities/permission.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePermissionsLevelDto } from '../dto/create-permissions-level.dto';
 import { UpdatePermissionsLevelDto } from '../dto/update-permissions-level.dto';
@@ -14,7 +15,7 @@ export class PermissionsLevelsRepository {
   ): Promise<PermissionsLevelEntity> {
     const { permissionId } = createPermissionsLevelDto;
 
-    const permission = await this.prisma.permission.findUnique({
+    const permission: PermissionEntity = await this.prisma.permission.findUnique({
       where: { id: permissionId }
     });
 
@@ -37,17 +38,22 @@ export class PermissionsLevelsRepository {
     });
   }
 
-  async update(id: number, updatePermissionsLevelDto: UpdatePermissionsLevelDto) {
+  async update(
+    id: number,
+    updatePermissionsLevelDto: UpdatePermissionsLevelDto
+  ): Promise<PermissionsLevelEntity> {
     const { permissionId } = updatePermissionsLevelDto;
 
-    const permissionLevel = await this.prisma.permissionLevel.findUnique({ where: { id } });
+    const permissionLevel: PermissionsLevelEntity = await this.prisma.permissionLevel.findUnique({
+      where: { id }
+    });
 
     if (!permissionLevel) {
       throw new NotFoundError(`A permissão com ID #${id} não foi encontrada`);
     }
 
     if (permissionId) {
-      const permission = await this.prisma.permission.findUnique({
+      const permission: PermissionEntity = await this.prisma.permission.findUnique({
         where: { id: permissionId }
       });
 
@@ -62,8 +68,10 @@ export class PermissionsLevelsRepository {
     });
   }
 
-  async remove(id: number) {
-    const permissionLevel = await this.prisma.permissionLevel.findUnique({ where: { id } });
+  async remove(id: number): Promise<PermissionsLevelEntity> {
+    const permissionLevel: PermissionsLevelEntity = await this.prisma.permissionLevel.findUnique({
+      where: { id }
+    });
 
     if (!permissionLevel) {
       throw new NotFoundError(`A permissão com ID #${id} não foi encontrada`);
