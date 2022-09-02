@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { PermissionInterceptor } from 'src/common/interceptors/permission.interceptor';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
 @ApiTags('Users')
+@UseInterceptors(PermissionInterceptor)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

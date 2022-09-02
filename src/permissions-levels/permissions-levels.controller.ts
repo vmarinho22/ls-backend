@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { PermissionInterceptor } from 'src/common/interceptors/permission.interceptor';
 import { CreatePermissionsLevelDto } from './dto/create-permissions-level.dto';
 import { UpdatePermissionsLevelDto } from './dto/update-permissions-level.dto';
 import { PermissionsLevelsService } from './permissions-levels.service';
 
 @ApiTags('Permissions Levels')
+@UseInterceptors(PermissionInterceptor)
 @Controller('permissions-levels')
 export class PermissionsLevelsController {
   constructor(private readonly permissionsLevelsService: PermissionsLevelsService) {}
