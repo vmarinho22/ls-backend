@@ -11,13 +11,53 @@ async function main() {
   await prisma.user.create({
     data: {
       email: 'viniciusmarinho1616@gmail.com',
-      username: 'marinho1616',
-      password: '$2y$10$7/rUTVGitl/GGocpp6Ld/.KYR8hr.ZLs97DAPmxPXVjkpdh2AECIu',
+      username: 'viniciusmarinho1616',
+      password: '$2a$10$pA.7eKNFf38csvaxCOWPXOqmpC6Qyqj2x2vmgo3Kp3SHuNLe1zaZi',
       permissionId: createdPermission.id
     }
+  });
+  await prisma.permissionLevel.createMany({
+    data: [
+      {
+        page: 'users',
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        permissionId: createdPermission.id
+      },
+      {
+        page: 'permissions',
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        permissionId: createdPermission.id
+      },
+      {
+        page: 'permissions-levels',
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        permissionId: createdPermission.id
+      },
+      {
+        page: 'me',
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        permissionId: createdPermission.id
+      }
+    ],
+    skipDuplicates: true
   });
 }
 
 main()
   .catch(e => console.error(e))
-  .finally(async () => await prisma.$disconnect);
+  .finally(async () => {
+    console.log('seed executada com sucesso!');
+    await prisma.$disconnect;
+  });
