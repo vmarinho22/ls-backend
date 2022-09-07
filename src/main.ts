@@ -9,6 +9,7 @@ import { UnauthorizedInterceptor } from './common/errors/interceptors/unauthoriz
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
 
   app.useGlobalPipes(
     new ValidationPipe({
