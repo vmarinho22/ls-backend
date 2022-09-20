@@ -93,4 +93,23 @@ export class UsersRepository {
 
     return user;
   }
+
+  async updateAdminStatus(id: number): Promise<UserEntity> {
+    const userExists: UserEntity = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!userExists) {
+      throw new NotFoundError(`Usuário com ID #${id} não encontrado`);
+    }
+
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: {
+        isSuperAdmin: !userExists.isSuperAdmin
+      }
+    });
+
+    delete user.password;
+
+    return user;
+  }
 }

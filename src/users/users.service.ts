@@ -22,4 +22,8 @@ export class UsersService {
   update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
     return this.repository.update(id, updateUserDto);
   }
+
+  updateAdminStatus(id: number): Promise<UserEntity> {
+    return this.repository.updateAdminStatus(id);
+  }
 }

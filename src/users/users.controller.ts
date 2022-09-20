@@ -31,4 +31,9 @@ export class UsersController {
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<UserEntity> {
     return this.usersService.update(+id, updateUserDto);
   }
+
+  @Patch('/updateAdminStatus/:id')
+  updateAdminStatus(@Param('id') id: string): Promise<UserEntity> {
+    return this.usersService.updateAdminStatus(+id);
+  }
 }
