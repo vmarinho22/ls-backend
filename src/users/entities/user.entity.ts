@@ -7,6 +7,7 @@ export class UserEntity implements User {
   password: string;
   isBlocked: boolean;
   permissionId: number;
+  isSuperAdmin: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
