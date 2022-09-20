@@ -11,7 +11,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 const methods = {
   GET: 'read',
   POST: 'create',
-  PATH: 'update',
+  PATCH: 'update',
   PUT: 'update',
   DELETE: 'delete'
 };
