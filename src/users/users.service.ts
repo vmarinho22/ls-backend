@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { UsersRepository } from './repositories/users.repository';
+import { UserFromJwt } from './../auth/models/UserFromJwt';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +24,7 @@ export class UsersService {
     return this.repository.update(id, updateUserDto);
   }
 
-  updateAdminStatus(id: number): Promise<UserEntity> {
-    return this.repository.updateAdminStatus(id);
+  updateAdminStatus(id: number, user: UserFromJwt): Promise<UserEntity> {
+    return this.repository.updateAdminStatus(id, user);
   }
 }

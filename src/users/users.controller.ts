@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { PermissionInterceptor } from 'src/common/interceptors/permission.interceptor';
+import { UserFromJwt } from './../auth/models/UserFromJwt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
@@ -33,7 +35,10 @@ export class UsersController {
   }
 
   @Patch('/updateAdminStatus/:id')
-  updateAdminStatus(@Param('id') id: string): Promise<UserEntity> {
-    return this.usersService.updateAdminStatus(+id);
+  updateAdminStatus(
+    @Param('id') id: string,
+    @CurrentUser() user: UserFromJwt
+  ): Promise<UserEntity> {
+    return this.usersService.updateAdminStatus(+id, user);
   }
 }

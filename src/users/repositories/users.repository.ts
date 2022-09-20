@@ -2,7 +2,9 @@ import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserEntity } from '../entities/user.entity';
+import { UserFromJwt } from './../../auth/models/UserFromJwt';
 import { NotFoundError } from './../../common/errors/types/NotFoundError';
+import { UnauthorizedError } from './../../common/errors/types/UnauthorizedError';
 import { PermissionEntity } from './../../permissions/entities/permission.entity';
 import { CreateUserDto } from './../dto/create-user.dto';
 import { UpdateUserDto } from './../dto/update-user.dto';
@@ -94,7 +96,17 @@ export class UsersRepository {
     return user;
   }
 
-  async updateAdminStatus(id: number): Promise<UserEntity> {
+  async updateAdminStatus(id: number, userFromRequest: UserFromJwt): Promise<UserEntity> {
+    const userToCheckIfIsSuperAdmin: UserEntity = await this.prisma.user.findUnique({
+      where: { id: userFromRequest.id }
+    });
+
+    if (userToCheckIfIsSuperAdmin.isSuperAdmin === false) {
+      throw new UnauthorizedError(
+        `O usuário que pediu a transformação de super usuário não tem essa permissão`
+      );
+    }
+
     const userExists: UserEntity = await this.prisma.user.findUnique({ where: { id } });
 
     if (!userExists) {
