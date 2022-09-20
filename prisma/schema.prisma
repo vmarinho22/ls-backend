@@ -54,7 +54,7 @@ model FrontPermission {
   id Int @id @default(autoincrement())
   page String
   action String
-  permited Boolean @default(false)
+  permitted Boolean @default(false)
   user User @relation(fields: [userId], references: [id])
   userId Int
   createdAt DateTime @default(now())

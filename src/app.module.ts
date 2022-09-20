@@ -7,9 +7,10 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { PermissionsLevelsModule } from './permissions-levels/permissions-levels.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { UsersModule } from './users/users.module';
+import { FrontPermissionsModule } from './front-permissions/front-permissions.module';
 
 @Module({
-  imports: [PermissionsModule, UsersModule, PermissionsLevelsModule, AuthModule],
+  imports: [PermissionsModule, UsersModule, PermissionsLevelsModule, AuthModule, FrontPermissionsModule],
   controllers: [AppController],
   providers: [
     AppService,
