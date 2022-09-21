@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFrontPermissionDto } from './dto/create-front-permission.dto';
 import { UpdateFrontPermissionDto } from './dto/update-front-permission.dto';
+import { FrontPermissionEntity } from './entities/front-permission.entity';
+import { FrontPermissionsRepository } from './repositories/front-permissions.repository';
 
 @Injectable()
 export class FrontPermissionsService {
-  create(createFrontPermissionDto: CreateFrontPermissionDto) {
-    return 'This action adds a new frontPermission';
+  constructor(private readonly repository: FrontPermissionsRepository) {}
+
+  async create(createFrontPermissionDto: CreateFrontPermissionDto): Promise<FrontPermissionEntity> {
+    return this.repository.create(createFrontPermissionDto);
   }
 
-  findAll() {
-    return `This action returns all frontPermissions`;
+  async findAll(): Promise<FrontPermissionEntity[]> {
+    return this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} frontPermission`;
+  async findOne(id: number): Promise<FrontPermissionEntity> {
+    return this.repository.findOne(id);
   }
 
-  update(id: number, updateFrontPermissionDto: UpdateFrontPermissionDto) {
-    return `This action updates a #${id} frontPermission`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} frontPermission`;
+  async update(
+    id: number,
+    updateFrontPermissionDto: UpdateFrontPermissionDto
+  ): Promise<FrontPermissionEntity> {
+    return this.repository.update(id, updateFrontPermissionDto);
   }
 }

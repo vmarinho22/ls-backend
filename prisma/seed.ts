@@ -44,6 +44,14 @@ async function main() {
         permissionId: createdPermission.id
       },
       {
+        page: 'front-permissions',
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        permissionId: createdPermission.id
+      },
+      {
         page: 'me',
         create: true,
         read: true,
