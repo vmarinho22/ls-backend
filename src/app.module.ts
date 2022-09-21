@@ -8,9 +8,10 @@ import { PermissionsLevelsModule } from './permissions-levels/permissions-levels
 import { PermissionsModule } from './permissions/permissions.module';
 import { UsersModule } from './users/users.module';
 import { FrontPermissionsModule } from './front-permissions/front-permissions.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
-  imports: [PermissionsModule, UsersModule, PermissionsLevelsModule, AuthModule, FrontPermissionsModule],
+  imports: [PermissionsModule, UsersModule, PermissionsLevelsModule, AuthModule, FrontPermissionsModule, RolesModule],
   controllers: [AppController],
   providers: [
     AppService,
