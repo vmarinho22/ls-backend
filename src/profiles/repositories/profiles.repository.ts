@@ -63,4 +63,13 @@ export class ProfileRepository {
       data: updateProfileDto
     });
   }
+
+  async uploadProfilePicture(id: number, fileUrl: string): Promise<ProfileEntity> {
+    return this.prisma.profile.update({
+      where: { id },
+      data: {
+        userPicture: fileUrl
+      }
+    });
+  }
 }

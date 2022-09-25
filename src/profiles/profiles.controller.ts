@@ -1,9 +1,19 @@
-import { Body, Controller, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UploadedFile,
+  UseInterceptors
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
+import { PermissionInterceptor } from 'src/common/interceptors/permission.interceptor';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ProfilesService } from './profiles.service';
-import { PermissionInterceptor } from 'src/common/interceptors/permission.interceptor';
 
 @ApiTags('Profile')
 @UseInterceptors(PermissionInterceptor)
@@ -29,5 +39,11 @@ export class ProfilesController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
     return this.profilesService.update(+id, updateProfileDto);
+  }
+
+  @Post('upload-profile-picture/:id')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@Param('id') id: string, @UploadedFile() file: Express.Multer.File) {
+    return this.profilesService.uploadProfilePicture(+id, file);
   }
 }
