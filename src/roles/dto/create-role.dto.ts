@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmpty, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateRoleDto {
   @ApiProperty({ description: 'Título do cargo' })
@@ -12,7 +12,7 @@ export class CreateRoleDto {
   title: string;
 
   @ApiProperty({ description: 'Descrição do cargo' })
-  @IsEmpty()
+  @IsOptional()
   @IsString({
     message: 'A descrição do cargo deve ser do tipo string'
   })
