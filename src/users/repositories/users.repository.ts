@@ -47,7 +47,11 @@ export class UsersRepository {
   }
 
   async findAll(): Promise<UserEntity[]> {
-    const users = await this.prisma.user.findMany();
+    const users = await this.prisma.user.findMany({
+      include: {
+        profile: true
+      }
+    });
     return users.map(user => {
       delete user.password;
       return user;
@@ -56,7 +60,10 @@ export class UsersRepository {
 
   async findOne(id: number): Promise<UserEntity> {
     const user = await this.prisma.user.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        profile: true
+      }
     });
     delete user.password;
 
