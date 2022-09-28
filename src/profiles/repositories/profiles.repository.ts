@@ -32,11 +32,30 @@ export class ProfileRepository {
   }
 
   async findAll(): Promise<ProfileEntity[]> {
-    return this.prisma.profile.findMany();
+    return this.prisma.profile.findMany({
+      include: {
+        role: {
+          select: {
+            id: true,
+            title: true
+          }
+        }
+      }
+    });
   }
 
   async findOne(id: number): Promise<ProfileEntity> {
-    return this.prisma.profile.findUnique({ where: { id } });
+    return this.prisma.profile.findUnique({
+      where: { id },
+      include: {
+        role: {
+          select: {
+            id: true,
+            title: true
+          }
+        }
+      }
+    });
   }
 
   async update(id: number, updateProfileDto: UpdateProfileDto): Promise<ProfileEntity> {
