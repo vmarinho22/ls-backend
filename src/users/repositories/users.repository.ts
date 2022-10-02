@@ -49,6 +49,7 @@ export class UsersRepository {
   async findAll(): Promise<UserEntity[]> {
     const users = await this.prisma.user.findMany({
       include: {
+        permission: true,
         profile: true
       }
     });
@@ -62,6 +63,7 @@ export class UsersRepository {
     const user = await this.prisma.user.findUnique({
       where: { id },
       include: {
+        permission: true,
         profile: true
       }
     });
