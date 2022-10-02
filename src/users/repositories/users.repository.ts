@@ -133,4 +133,31 @@ export class UsersRepository {
 
     return user;
   }
+
+  async updateAccountBlockStatus(id: number, userFromRequest: UserFromJwt): Promise<UserEntity> {
+    const userToCheckIfIsSuperAdmin: UserEntity = await this.prisma.user.findUnique({
+      where: { id: userFromRequest.id }
+    });
+
+    if (userToCheckIfIsSuperAdmin.isSuperAdmin === false) {
+      throw new UnauthorizedError(`O usuário que pediu o bloqueio não tem essa permissão`);
+    }
+
+    const userExists: UserEntity = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!userExists) {
+      throw new NotFoundError(`Usuário com ID #${id} não encontrado`);
+    }
+
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: {
+        isBlocked: !userExists.isBlocked
+      }
+    });
+
+    delete user.password;
+
+    return user;
+  }
 }

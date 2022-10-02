@@ -41,4 +41,12 @@ export class UsersController {
   ): Promise<UserEntity> {
     return this.usersService.updateAdminStatus(+id, user);
   }
+
+  @Patch('/updateAccountBlockStatus/:id')
+  updateAccountBlockStatus(
+    @Param('id') id: string,
+    @CurrentUser() user: UserFromJwt
+  ): Promise<UserEntity> {
+    return this.usersService.updateAccountBlockStatus(+id, user);
+  }
 }
