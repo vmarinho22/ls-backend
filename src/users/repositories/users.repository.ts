@@ -50,11 +50,17 @@ export class UsersRepository {
     const users = await this.prisma.user.findMany({
       include: {
         permission: true,
-        profile: true
+        profile: {
+          include: {
+            role: true
+          }
+        }
       }
     });
     return users.map(user => {
       delete user.password;
+      delete user.permissionId;
+      delete user.profile?.roleId;
       return user;
     });
   }
@@ -64,10 +70,16 @@ export class UsersRepository {
       where: { id },
       include: {
         permission: true,
-        profile: true
+        profile: {
+          include: {
+            role: true
+          }
+        }
       }
     });
     delete user.password;
+    delete user.permissionId;
+    delete user.profile?.roleId;
 
     return user;
   }
