@@ -172,4 +172,16 @@ export class UsersRepository {
 
     return user;
   }
+
+  async verifyIfUserIsBlocked(id: number): Promise<{ isBlocked: boolean }> {
+    const userExists: UserEntity = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!userExists) {
+      throw new NotFoundError(`Usuário com ID #${id} não encontrado`);
+    }
+
+    return {
+      isBlocked: userExists.isBlocked
+    };
+  }
 }

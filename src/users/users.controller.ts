@@ -29,6 +29,11 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
+  @Get('/isBlocked/:id')
+  verifyIfUserIsBlocked(@Param('id') id: string): Promise<{ isBlocked: boolean }> {
+    return this.usersService.verifyIfUserIsBlocked(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<UserEntity> {
     return this.usersService.update(+id, updateUserDto);

@@ -31,4 +31,8 @@ export class UsersService {
   updateAccountBlockStatus(id: number, user: UserFromJwt): Promise<UserEntity> {
     return this.repository.updateAccountBlockStatus(id, user);
   }
+
+  verifyIfUserIsBlocked(id: number): Promise<{ isBlocked: boolean }> {
+    return this.repository.verifyIfUserIsBlocked(id);
+  }
 }
