@@ -20,6 +20,10 @@ export class UsersService {
     return this.repository.findOne(id);
   }
 
+  findByEmail(email: string): Promise<UserEntity> {
+    return this.repository.findByEmail(email);
+  }
+
   update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
     return this.repository.update(id, updateUserDto);
   }

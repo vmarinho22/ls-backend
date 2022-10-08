@@ -47,7 +47,7 @@ export class UsersRepository {
   }
 
   async findAll(): Promise<UserEntity[]> {
-    const users = await this.prisma.user.findMany({
+    const users: UserEntity[] = await this.prisma.user.findMany({
       include: {
         permission: true,
         profile: {
@@ -66,7 +66,7 @@ export class UsersRepository {
   }
 
   async findOne(id: number): Promise<UserEntity> {
-    const user = await this.prisma.user.findUnique({
+    const user: UserEntity = await this.prisma.user.findUnique({
       where: { id },
       include: {
         permission: true,
@@ -77,6 +77,30 @@ export class UsersRepository {
         }
       }
     });
+    delete user.password;
+    delete user.permissionId;
+    delete user.profile?.roleId;
+
+    return user;
+  }
+
+  async findByEmail(email: string): Promise<UserEntity> {
+    const user: UserEntity = await this.prisma.user.findUnique({
+      where: { email },
+      include: {
+        permission: true,
+        profile: {
+          include: {
+            role: true
+          }
+        }
+      }
+    });
+
+    if (!user) {
+      throw new NotFoundError(`Usuário com email ${email} não encontrado`);
+    }
+
     delete user.password;
     delete user.permissionId;
     delete user.profile?.roleId;

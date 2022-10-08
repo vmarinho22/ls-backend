@@ -29,6 +29,11 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
+  @Get('/findByEmail/:email')
+  findByEmail(@Param('email') email: string): Promise<UserEntity> {
+    return this.usersService.findByEmail(email);
+  }
+
   @Get('/isBlocked/:id')
   verifyIfUserIsBlocked(@Param('id') id: string): Promise<{ isBlocked: boolean }> {
     return this.usersService.verifyIfUserIsBlocked(+id);
