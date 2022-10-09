@@ -97,13 +97,11 @@ export class UsersRepository {
       }
     });
 
-    if (!user) {
-      throw new NotFoundError(`Usuário com email ${email} não encontrado`);
+    if (user) {
+      delete user.password;
+      delete user.permissionId;
+      delete user.profile?.roleId;
     }
-
-    delete user.password;
-    delete user.permissionId;
-    delete user.profile?.roleId;
 
     return user;
   }
