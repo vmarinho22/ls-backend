@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateProfileDto {
   @ApiProperty({ description: 'Nome do usuário' })
@@ -12,9 +12,7 @@ export class CreateProfileDto {
   name: string;
 
   @ApiProperty({ description: 'Breve descrição sobre o usuário' })
-  @IsNotEmpty({
-    message: 'O descrição não pode ser vazia'
-  })
+  @IsOptional()
   @IsString({
     message: 'O descrição deve ser do tipo string'
   })

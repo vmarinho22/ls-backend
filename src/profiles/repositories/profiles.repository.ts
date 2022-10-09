@@ -14,7 +14,7 @@ export class ProfileRepository {
   async create(createProfileDto: CreateProfileDto): Promise<ProfileEntity> {
     const { roleId, userId } = createProfileDto;
 
-    const roleExists: RoleEntity = await this.prisma.role.findUnique({ where: { id: userId } });
+    const roleExists: RoleEntity = await this.prisma.role.findUnique({ where: { id: roleId } });
 
     if (!roleExists) {
       throw new NotFoundError(`Cargo com o ID #${roleId} não encontrado`);
