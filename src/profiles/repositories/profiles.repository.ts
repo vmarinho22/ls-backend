@@ -62,7 +62,7 @@ export class ProfileRepository {
     const { roleId, userId } = updateProfileDto;
 
     if (roleId) {
-      const roleExists: RoleEntity = await this.prisma.role.findUnique({ where: { id: userId } });
+      const roleExists: RoleEntity = await this.prisma.role.findUnique({ where: { id: roleId } });
 
       if (!roleExists) {
         throw new NotFoundError(`Cargo com o ID #${roleId} não encontrado`);
