@@ -92,3 +92,15 @@ model Role {
 
   @@map("role")
 }
+
+
+model Training {
+  id String @id @default(uuid())
+  name String
+  description String?
+  validity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("training")
+}
