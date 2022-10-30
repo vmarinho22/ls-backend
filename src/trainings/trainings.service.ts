@@ -1,22 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
+import { TrainingEntity } from './entities/training.entity';
+import { TrainingsRepository } from './repositories/trainings.repository';
 
 @Injectable()
 export class TrainingsService {
-  create(createTrainingDto: CreateTrainingDto) {
-    return 'This action adds a new training';
+  constructor(private readonly repository: TrainingsRepository) {}
+
+  async create(createTrainingDto: CreateTrainingDto): Promise<TrainingEntity> {
+    return this.repository.create(createTrainingDto);
   }
 
-  findAll() {
-    return `This action returns all trainings`;
+  async findAll(): Promise<TrainingEntity[]> {
+    return this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} training`;
+  async findOne(id: number): Promise<TrainingEntity> {
+    return this.repository.findOne(id);
   }
 
-  update(id: number, updateTrainingDto: UpdateTrainingDto) {
-    return `This action updates a #${id} training`;
+  async update(id: number, updateTrainingDto: UpdateTrainingDto): Promise<TrainingEntity> {
+    return this.repository.update(id, updateTrainingDto);
   }
 }
