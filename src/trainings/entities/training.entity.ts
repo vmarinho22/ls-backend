@@ -1,7 +1,7 @@
 import { Training } from '@prisma/client';
 
 export class TrainingEntity implements Training {
-  id: string;
+  id: number;
   name: string;
   description: string | null;
   validity: number;

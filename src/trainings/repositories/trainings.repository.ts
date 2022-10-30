@@ -20,14 +20,20 @@ export class TrainingsRepository {
   }
 
   async findOne(id: number): Promise<TrainingEntity> {
-    return this.prisma.training.findUnique({
-      where: { id: String(id) }
+    const training = await this.prisma.training.findUnique({
+      where: { id }
     });
+
+    if (!training) {
+      throw new NotFoundError(`Treinamento com ID #${id} não encontrado`);
+    }
+
+    return training;
   }
 
   async update(id: number, updateTrainingDto: UpdateTrainingDto): Promise<TrainingEntity> {
     const training = await this.prisma.training.findUnique({
-      where: { id: String(id) }
+      where: { id }
     });
 
     if (!training) {
@@ -35,7 +41,7 @@ export class TrainingsRepository {
     }
 
     return this.prisma.training.update({
-      where: { id: String(id) },
+      where: { id },
       data: updateTrainingDto
     });
   }
