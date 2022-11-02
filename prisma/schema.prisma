@@ -21,6 +21,7 @@ model User {
   frontPermissions FrontPermission[]
   profile Profile?
   isSuperAdmin Boolean @default(false)
+  trainingHistory TrainingHistory[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -101,6 +102,21 @@ model Training {
   validity Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  trainingHistory TrainingHistory[]
 
   @@map("training")
+}
+
+model TrainingHistory {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  training Training @relation(fields: [trainingId], references: [id])
+  trainingId Int
+  endedIn DateTime
+  certificateUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("training_history")
 }

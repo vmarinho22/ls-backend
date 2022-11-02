@@ -11,9 +11,10 @@ import { FrontPermissionsModule } from './front-permissions/front-permissions.mo
 import { RolesModule } from './roles/roles.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { TrainingsModule } from './trainings/trainings.module';
+import { TrainingsHistoryModule } from './trainings-history/trainings-history.module';
 
 @Module({
-  imports: [PermissionsModule, UsersModule, PermissionsLevelsModule, AuthModule, FrontPermissionsModule, RolesModule, ProfilesModule, TrainingsModule],
+  imports: [PermissionsModule, UsersModule, PermissionsLevelsModule, AuthModule, FrontPermissionsModule, RolesModule, ProfilesModule, TrainingsModule, TrainingsHistoryModule],
   controllers: [AppController],
   providers: [
     AppService,
