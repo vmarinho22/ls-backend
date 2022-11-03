@@ -27,6 +27,7 @@ async function bootstrap() {
     .setTitle('Learning Sys Docs')
     .setDescription('Uma api feita para o sistema Learning Sys')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
