@@ -62,6 +62,24 @@ export class TrainingsHistoryRepository {
     return trainingHistory;
   }
 
+  async findByUser(user: number): Promise<TrainingsHistoryEntity[]> {
+    const trainingsHistory = await this.prisma.trainingHistory.findMany({
+      where: {
+        userId: user
+      },
+      include: {
+        training: true
+      }
+    });
+
+    return trainingsHistory.map(item => {
+      delete item.userId;
+      delete item.trainingId;
+
+      return item;
+    });
+  }
+
   async update(
     id: number,
     updateTrainingsHistoryDto: UpdateTrainingsHistoryDto

@@ -26,6 +26,11 @@ export class TrainingsHistoryController {
     return this.trainingsHistoryService.findOne(+id);
   }
 
+  @Get('/user/:id')
+  findByUser(@Param('id') id: string) {
+    return this.trainingsHistoryService.findByUser(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTrainingsHistoryDto: UpdateTrainingsHistoryDto) {
     return this.trainingsHistoryService.update(+id, updateTrainingsHistoryDto);

@@ -22,6 +22,10 @@ export class TrainingsHistoryService {
     return this.repository.findOne(id);
   }
 
+  async findByUser(user: number): Promise<TrainingsHistoryEntity[]> {
+    return this.repository.findByUser(user);
+  }
+
   async update(
     id: number,
     updateTrainingsHistoryDto: UpdateTrainingsHistoryDto
