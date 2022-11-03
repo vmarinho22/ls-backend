@@ -14,32 +14,52 @@ export class TrainingsHistoryRepository {
   async create(
     createTrainingsHistoryDto: CreateTrainingsHistoryDto
   ): Promise<TrainingsHistoryEntity> {
-    return this.prisma.trainingHistory.create({
+    const createdTrainingHistory = await this.prisma.trainingHistory.create({
       data: createTrainingsHistoryDto,
       include: {
         training: true,
         user: true
       }
     });
+
+    delete createdTrainingHistory.user.password;
+    delete createdTrainingHistory.userId;
+    delete createdTrainingHistory.trainingId;
+
+    return createdTrainingHistory;
   }
 
   async findAll(): Promise<TrainingsHistoryEntity[]> {
-    return this.prisma.trainingHistory.findMany({
+    const trainingsHistory = await this.prisma.trainingHistory.findMany({
       include: {
         training: true,
         user: true
       }
     });
+
+    return trainingsHistory.map(item => {
+      delete item.user.password;
+      delete item.userId;
+      delete item.trainingId;
+
+      return item;
+    });
   }
 
   async findOne(id: number): Promise<TrainingsHistoryEntity> {
-    return this.prisma.trainingHistory.findUnique({
+    const trainingHistory = await this.prisma.trainingHistory.findUnique({
       where: { id },
       include: {
         training: true,
         user: true
       }
     });
+
+    delete trainingHistory.user.password;
+    delete trainingHistory.userId;
+    delete trainingHistory.trainingId;
+
+    return trainingHistory;
   }
 
   async update(
@@ -66,10 +86,18 @@ export class TrainingsHistoryRepository {
       }
     }
 
-    const trainingHistory: TrainingsHistoryEntity = await this.prisma.trainingHistory.update({
+    const trainingHistory = await this.prisma.trainingHistory.update({
       where: { id },
-      data: updateTrainingsHistoryDto
+      data: updateTrainingsHistoryDto,
+      include: {
+        training: true,
+        user: true
+      }
     });
+
+    delete trainingHistory.user.password;
+    delete trainingHistory.userId;
+    delete trainingHistory.trainingId;
 
     return trainingHistory;
   }
