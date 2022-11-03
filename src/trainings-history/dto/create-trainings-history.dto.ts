@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsUrl } from 'class-validator';
 
 export class CreateTrainingsHistoryDto {
@@ -30,6 +31,7 @@ export class CreateTrainingsHistoryDto {
   @IsNotEmpty({
     message: 'A data da conclusão não pode ser vazio'
   })
+  @Type(() => Date)
   @IsDate({
     message: 'A data da conclusão deve ser do tipo data'
   })
@@ -40,7 +42,7 @@ export class CreateTrainingsHistoryDto {
   @IsUrl(
     {},
     {
-      message: 'A Url do certificado deve ser do tipo string'
+      message: 'A Url do certificado deve ser uma url'
     }
   )
   certificateUrl: string;
