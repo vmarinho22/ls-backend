@@ -18,7 +18,11 @@ export class TrainingsHistoryRepository {
       data: createTrainingsHistoryDto,
       include: {
         training: true,
-        user: true
+        user: {
+          include: {
+            profile: true
+          }
+        }
       }
     });
 
@@ -33,7 +37,11 @@ export class TrainingsHistoryRepository {
     const trainingsHistory = await this.prisma.trainingHistory.findMany({
       include: {
         training: true,
-        user: true
+        user: {
+          include: {
+            profile: true
+          }
+        }
       }
     });
 
@@ -51,7 +59,11 @@ export class TrainingsHistoryRepository {
       where: { id },
       include: {
         training: true,
-        user: true
+        user: {
+          include: {
+            profile: true
+          }
+        }
       }
     });
 
@@ -109,7 +121,11 @@ export class TrainingsHistoryRepository {
       data: updateTrainingsHistoryDto,
       include: {
         training: true,
-        user: true
+        user: {
+          include: {
+            profile: true
+          }
+        }
       }
     });
 
