@@ -76,6 +76,20 @@ async function main() {
                 read: true,
                 update: true,
                 delete: true
+              },
+              {
+                page: 'trainings',
+                create: true,
+                read: true,
+                update: true,
+                delete: true
+              },
+              {
+                page: 'trainings-history',
+                create: true,
+                read: true,
+                update: true,
+                delete: true
               }
             ]
           }
