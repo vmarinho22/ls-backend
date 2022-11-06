@@ -1,73 +1,93 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+![Logo](https://res.cloudinary.com/marinho/image/upload/v1667759446/Project%20View/logo_doc_gpah97.png)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Lsys System - Sistema para gerenciar treinamentos
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Um projeto da faculdade sobre um sistema de controle de treinamentos (de diversos tipos) de funcionários para RH de empresas.
 
-## Description
+## Stack utilizada
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Front-end:** React, NextJS, Chakra UI, Recoil JS
 
-## Installation
+**Back-end:** Nest JS, Docker
 
-```bash
-$ npm install
-```
+## Funcionalidades
 
-## Running the app
+- Validação de token JWT
+- Sistema integrado de permissões rota a rota
+- Documentação automatizada
+- Validação automatizada
+
+## Rodando localmente
+
+Para instalar as dependências e rodar o projeto, você precisar ter instalado:
+
+- Node JS v16+
+- Yarn Package Manager
+- Docker
+- Docker Compose
+
+Para acessar o [Frontend](https://github.com/vmarinho22/ls-frontend) desse projeto, [clique aqui!](https://github.com/vmarinho22/ls-frontend)
+
+Clone o projeto
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+  git clone https://github.com/vmarinho22/ls-backend
 ```
 
-## Test
+Entre no diretório do projeto
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  cd ls-backend
 ```
 
-## Support
+Clone o arquivo `.env.example`, renomeie para `.env` e insira as informações necessárias nas variáveis de ambiente.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Suba os containers necessários para iniciar o banco de dados.
 
-## Stay in touch
+```bash
+  sudo docker compose up -d //or sudo docker-compose up -d
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Aviso: Caso não preencha o env corretamente, o docker não subirá os containers corretamente, assim impossibilitando o uso do projeto.
 
-## License
+Instale as dependências
 
-Nest is [MIT licensed](LICENSE).
+```bash
+  yarn //or yarn install
+```
+
+### Iniciando no modo de desenvolvimento
+
+Após a instalação das dependências, inicie o servidor Nest JS
+
+```bash
+  yarn start:dev
+```
+
+### Iniciando no modo de produção
+
+Após a instalação das dependências, realize o build do projeto:
+
+```bash
+  yarn build
+```
+
+E quando finalizar, inicie o servidor Nest JS
+
+```bash
+  yarn start
+```
+
+## Documentação da API
+
+#### Para visualizar a documentação da API, basta entrar na seguinte rota
+
+```http
+  /docs
+```
+
+Lá você encontrará todas as rotas documentas e seus parametros necessários.
+
+## Autores
+
+- [@vmarinho22](https://www.github.com/vmarinho22)
